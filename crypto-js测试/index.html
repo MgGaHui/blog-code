@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./node_modules/crypto-js/crypto-js.js"></script>
+    <script src="./node_modules/crypto-js/md5.js"></script>
+    <script>
+        // Encrypt
+        var ciphertext = CryptoJS.AES.encrypt('弄好世界', 'secret key 123').toString();
+        console.log(ciphertext);
+        // Decrypt
+        var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
+        var originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+        console.log(originalText); // 'my message'
+
+        // md5
+        var ciphertext = md5('弄好世界').toString();
+        console.log(ciphertext);
+        var bytes = CryptoJS.MD5.decrypt(ciphertext);
+        var originalText = bytes.toString(CryptoJS.enc.Utf8);
+        debugger
+        //encrypt
+        var rawStr = "hello world!";
+        var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
+        var base64 = CryptoJS.enc.Base64.stringify(wordArray);
+        console.log('encrypted:', base64);
+
+        //decrypt
+        var parsedWordArray = CryptoJS.enc.Base64.parse(base64);
+        var parsedStr = parsedWordArray.toString(CryptoJS.enc.Utf8);
+        console.log("parsed:", parsedStr);
+        console.log("parsed:", parsedStr);
+    </script>
+</body>
+
+</html>
