@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./node_modules/cnchar-all/cnchar.all.min.js"></script>
+</head>
+
+<body>
+    <script>
+        console.log('汉字'.spell()); // prototype 方式调用
+        console.log(cnchar.spell('汉字')); // cnchar api 调用
+        console.log('汉字'.stroke()); // prototype 方式调用
+        console.log('汉字',cnchar.stroke('汉字','order', 'detail').map(function(v){
+            return v.map(function(i){
+                return i.shape
+            })
+        })); 
+        console.log('一个',cnchar.stroke('一个','order', 'detail').map(function(v){
+            return v.map(function(i){
+                return i.shape
+            })
+        })); 
+        console.log('杨萍',cnchar.stroke('杨萍','order', 'detail').map(function(v){
+            return v.map(function(i){
+                return i.shape
+            })
+        })); // cnchar api 调用
+    </script>
+</body>
+
+</html>
