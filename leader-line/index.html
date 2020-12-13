@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>leader-line练习</title>
+    <script src="https://files.cnblogs.com/files/mggahui/leader-line.min.js"></script>
+    <script src="../node_modules/html2canvas/dist/html2canvas.min.js"></script>
+    <style>
+        .target {
+            display: inline-block;
+            background-color: #9ee7ea;
+            padding: 12px;
+        }
+
+        #start {}
+
+        #end {
+            float: right;
+            margin-top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="start" class="target">start</div>
+    <div id="end" class="target">end</div>
+    <script>
+        var startEle = document.getElementById('start');
+        var endEle = document.getElementById('end');
+
+        var leader_line = new LeaderLine(
+            startEle,
+            endEle,
+            // LeaderLine.pointAnchor(endEle, {
+            //     x: 0,
+            //     y: 0
+            // }),
+            // LeaderLine.areaAnchor(endEle, {
+            //     x: 0,
+            //     y: 0,
+            //     width: 50,
+            //     height: 80,
+            // }),
+            {
+                startPlugColor: '#ff3792', // 渐变色开始色
+                endPlugColor: '#fff386',// 渐变色结束色
+                gradient: true, // 使用渐变色
+                dash: { // 虚线样式
+                    animation: true,// 让线条滚动起来
+                },
+                hide: true,
+                // endLabel: LeaderLine.pathLabel('This is additional label')
+            }
+        );
+
+        /** 显示效果
+             *  draw 绘制线条
+             *  fade 淡入
+             *  none 无效果，即直接显示
+             */
+        var showEffectName = 'draw';
+        // 动画参数
+        var animOptions = {
+            duration: 1000, //持续时长
+            timing: 'ease-in', // 动画函数
+        }
+        leader_line.show(showEffectName, animOptions)
+
+        // setTimeout(function () {
+        //     leader_line.setOptions({
+        //         startPlugColor: '#ff3792', // 渐变色开始色
+        //         endPlugColor: '#fff386',// 渐变色结束色
+        //         gradient: true, // 使用渐变色
+        //         dash: { // 虚线样式
+        //             animation: true,// 让线条滚动起来
+        //         }
+        //     })
+        // }, 5000)
+
+        // setTimeout(function () {
+        //     leader_line.remove()
+        //     console.log(leader_line);
+        // }, 5000)
+
+    </script>
+    <script>
+        function canvasToImg(canvas) {
+            var a_link = document.createElement("a");
+            a_link.href = canvas.toDataURL("image/png");
+            a_link.download = 'leader-line' + ".png";
+            a_link.click();
+        }
+
+        function capture() {
+            html2canvas(document.body, {
+                allowTaint: true,
+                useCORS: true,
+            }).then(canvas => {
+                canvasToImg(canvas)
+            });
+        }
+    </script>
+</body>
+
+</html>

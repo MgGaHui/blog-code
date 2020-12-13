@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>h5 a 标签移动端下载</title>
+    <script src="./file-saver.js"></script>
+</head>
+
+<body>
+    <img src="http://192.168.1.6:3000/www/upload/img/upload_1579174962404.png" alt="">
+    <img src="./biu.gif" alt="">
+    <a href="http://192.168.1.6:3000/www/upload/img/upload_1579174962404.png" download="biu.gif">下载</a>
+</body>
+<script>
+    // 通过XMLHttpRequest下载文件
+    function downloadFileByUrl(url, fileName) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'blob';
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                // 获取blob数据并保存
+                downloadByBlob(xhr.response, fileName);
+            }
+        };
+        xhr.send();
+    }
+    // 通过blob下载文件
+    function downloadByBlob(blob, fileName) {
+        if (window.navigator.msSaveBlob) {//ie下载
+            window.navigator.msSaveBlob(blob, fileName)
+        } else {
+            const URL = window.URL || window.webkitURL
+            const url = URL.createObjectURL(blob)
+            aDownlad(url, fileName)
+        }
+    }
+    // a 标签下载文件
+    function aDownlad(url, fileName) {
+        const link = document.createElement('a')
+        link.href = url
+        link.target = '_blank'
+        link.download = fileName
+        link.style.display = 'none'
+        document.body.append(link)
+        link.click()
+    }
+    // const url = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604684708077&di=42f455caeb0fe47b7f325b8382d5aef3&imgtype=0&src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_match%2F0%2F10429984112%2F0.jpg';
+    const url = 'http://192.168.1.6:3000/www/upload/img/upload_1579174962404.png'
+    const fileName = 'bixin.jpg';
+    // downloadFileByUrl(url, fileName)
+    // aDownlad(url, fileName)
+    // saveAs(url, fileName)
+    // window.open(url)
+
+    /* filesaver api */
+    // var blob = new Blob(["Hello, world!"], { type: "text/plain;charset=utf-8" });
+    // saveAs(blob, "hello world.txt");
+</script>
+
+</html>

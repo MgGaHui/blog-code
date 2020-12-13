@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .header {
+            height: 49px;
+            background-color: red;
+        }
+
+        .body {
+            flex: 1;
+            background-color: green;
+        }
+
+        .footer {
+            height: 46px;
+            background-color: yellow;
+            overflow: visible;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">头部</div>
+        <div class="body">内容</div>
+        <div class="footer">
+            <div class="open-scroll">
+                <div class="title">我是尾部标题</div>
+                <div class="content">我是尾部标题内容，我的内容有很多，可以一直往下滚动哦</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('.footer').click(function () {
+                $(this).find('.content').toggleClass('hidden')
+            })
+        })
+    </script>
+</body>
+
+</html>

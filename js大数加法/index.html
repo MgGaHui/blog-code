@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**大数加法
+        实现原理，利用竖式加法原理
+         */
+        function addStrings(num_str1, num_str2) {
+            //字符串转字符数组
+            const num_arr1 = num_str1.split('');
+            //字符串转字符数组
+            const num_arr2 = num_str2.split('');
+            // 求和结果数据长度
+            let sum_length = Math.max(num_arr1.length, num_arr2.length);
+            //求和结果
+            const sum = [];
+            //进位标志位
+            let CF = 0;
+            // 循环语句为什么加CF进位判断呢，因为当最高位产生进位，
+            // 并且没有更多数要参与运算时，需要进位参与一次运算
+            while (sum_length-- > 0 || CF) {
+                // 求和，注意数组长度不等，按0算
+                let temp = Number.parseInt(num_arr1.pop() || 0)
+                    + Number.parseInt(num_arr2.pop() || 0) + CF;
+                if (temp >= 10) {
+                    temp %= 10; // 取个位数
+                    CF = 1; //产生进位(对于加法，最多产生1个进位)
+                } else {
+                    CF = 0 // 未产生进位
+                }
+                sum.unshift(temp); // 记录求和数据
+            }
+            return sum.join('')
+        }
+        // debugger
+        console.log(addStrings("99999999999", "99999"));
+    </script>
+</body>
+
+</html>

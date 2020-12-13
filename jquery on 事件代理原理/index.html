@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery on 事件代理原理</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <style>
+        li:hover {
+            cursor: pointer;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-wrapper">
+        <ul>
+            <li><a href="javascript:void(0)">你</a></li>
+            <li><a href="javascript:void(0)">好</a></li>
+            <li><a href="javascript:void(0)">世</a></li>
+            <li><a href="javascript:void(0)">界</a></li>
+        </ul>
+    </div>
+    <script>
+        $(function () {
+            $('.nav-wrapper').on('click', 'li', function () {
+                console.log($(this)[0]);
+            })
+        })
+        function my$(selector) {
+            return document.querySelectorAll(selector)
+        }
+        // window.addEventListener('load', function () {
+        //     Array.prototype.forEach.call(my$('.nav-wrapper'), function (dom) {
+        //         dom.addEventListener('click', function () {
+        //             console.log(this);
+        //         }, false)
+        //     })
+
+        // }, false)
+        // function deletagate(type, parentSelector, slector, fn) {
+
+        // }
+        class Deletegate {
+            constructor() { }
+            _$(parentDom, selector) {
+                return parentDom.querySelectorAll(selector)
+            }
+            each(arrlike, cb) {
+                [].forEach.call(arrlike, cb)
+            }
+            on(type, parentSelector, selector, fn) {
+                let handler = typeof selector === 'function' ? selector : fn;
+                this.each(this._$(document.body, parentSelector), (parentDom) => {
+                    this.each(this._$(parentDom, selector), (chilDom) => {
+                        chilDom.addEventListener(type, handler, false)
+                    })
+                })
+            }
+        }
+        const instance = new Deletegate()
+        // instance.on('click', '.nav-wrapper', 'li', function () {
+        //     console.log(this);
+        // })
+        function delegate(parentSelectors, eventName, childSelectors, data, handler) {
+            function each(arrlike, cb) {
+                [].forEach.call(arrlike, cb)
+            }
+            var parents = document.querySelectorAll(parentSelectors)
+            each(parents, function (parent) {
+
+                // each(childs, function (child) {
+                //     child.addEventListener(type, handler, false)
+                // })
+                parents.addEventListener(type, function (e) {
+                    var childs = parent.querySelectorAll(childSelectors)
+                    var target = e.target || e.srcElement
+                    // target 本身为代理节点
+                    // 或者 target 为代理节点子节点
+                    if ([].includes.call(childs, target) || childs.contains(target)) {
+                        // handler.call(target, e)
+                    }
+
+                }, false)
+            })
+
+
+        }
+    </script>
+</body>
+
+</html>

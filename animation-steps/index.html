@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation-steps</title>
+    <style>
+        p {
+            /* 设置 Monaco 字体属性，字体大小为16px，用以保证每个字符的 width 相同，width 约为9.6p */
+            font-family: Monaco;
+            /* 9.6px * 13 = 124.8px (125px) */
+            font-size: 16px;
+            width: 125px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 1px solid transparent;
+            /* 同时应用动画 animate-x、cursor-x */
+            animation: animate-x 3s 0s steps(13) infinite forwards, cursor-x 0.4s 0s linear infinite;
+        }
+
+        /* 改变容器宽度 */
+        @keyframes animate-x {
+            0% {
+                width: 0;
+            }
+        }
+
+        /* p {
+            width: 125px;
+            overflow: hidden;
+            border-right: 1px solid transparent;
+            animation: animate-x 3s 0s steps(13) infinite forwards;
+        } */
+    </style>
+</head>
+
+<body>
+    <p>世界这么大，还是遇见你，yp</p>
+    <p>yangpingdbsdxq</p>
+</body>
+
+</html>
