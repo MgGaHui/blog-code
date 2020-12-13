@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        #catalog ul {
+            counter-reset: section;
+            list-style-type: none;
+        }
+
+        #catalog ul li {
+            counter-increment: section;
+        }
+
+        #catalog ul li:before {
+            content: counters(section, ".") ". ";
+        }
+
+        li {
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="catalog">
+        <ul>
+            <li>css计数器
+                <ul>
+                    <li>counter-reset - 创建或者重置计数器</li>
+                    <li>counter-increment - 递增变量</li>
+                    <li>content - 插入生成的内容</li>
+                    <li>counter() 或 counters() 函数 - 将计数器的值添加到元素</li>
+                </ul>
+            </li>
+            <li>使用
+                <ul>
+                    <li>初始化计数器
+                        <ul>
+                            <li>
+                                语法
+                                <ul>
+                                    <li>counter-reset：none | [&lt;identifier&gt;&lt;integer&gt;]+</li>
+                                </ul>
+                            </li>
+                            <li>
+                                取值
+                                <ul>
+                                    <li>none：阻止计数器复位</li>
+                                    <li>&lt;identifier&gt;：identifier定义一个或多个将被复位的selector，id，或者class
+                                    </li>
+                                    <li>&lt;integer&gt;： 定义被复位的数值，可以为负值，默认值是0
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>计数器自增
+                        <ul>
+                            <li>
+                                语法
+                                <ul>
+                                    <li>counter-increment：none | [&lt;identifier&gt;&lt;integer&gt;]+</li>
+                                </ul>
+                            </li>
+                            <li>
+                                取值
+                                <ul>
+                                    <li>none：阻止计数器增加</li>
+                                    <li>&lt;identifier&gt;：identifier定义一个或多个将被复位的selector，id，或者class
+                                    </li>
+                                    <li>&lt;integer&gt;： 定义计算器每次增加的数值，可以为负值，默认值是1
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>显示计数器
+                        <ul>
+                            <li>
+                                语法
+                                <ul>
+                                    <li>content：normal | counter(name) | counter(name,list-style-type) |
+                                        counters(name,string) | counters(name,string,list-style-type) </li>
+                                </ul>
+                            </li>
+                            <li>
+                                取值
+                                <ul>
+                                    <li>normal：默认值。表现与none值相同</li>
+                                    <li>none： 不生成任何值。</li>
+                                    <li>counter(name)： 使用已命名的计数器</li>
+                                    <li>counter(name,list-style-type)： 使用已命名的计数器并遵从指定的list-style-type属性</li>
+                                    <li>counters(name,string)： 使用所有已命名的计数器</li>
+                                    <li>counters(name,string,list-style-type)： 使用所有已命名的计数器并遵从指定的list-style-type属性</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
