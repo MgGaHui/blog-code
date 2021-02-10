@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符画升级版- ccued.com - lenton</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="picbox">
+        <canvas class="canvas" id="canvas"></canvas>
+    </div>
+    <div class="ctrl">
+        <div class="ctrl-inside">
+            <canvas class="canvas2" id="canvas2"></canvas>
+        </div>
+        <div class="btns">
+            <br><br>
+            <button id="add" class="primary">添加</button>
+            <br><br>
+            笔触粗细： <input id="penInput" style="width:100px" type="range" min="1" max="10" value="4" /><span
+                id="pen">4</span>
+            <br><br>
+            画布宽度： <input id="sourceWidth" style="width:100px" type="range" min="60" step="10" max="120"
+                value="60" /><span id="source">1200</span>
+            <br><br>
+            <button id="calc">概览图片</button>
+            <button id="addOnly">增加但不渲染</button>
+            <!-- <br><br>
+      <label for="canRotate"><input type="checkbox" id="canRotate" /> 高细节(慢，耗性能)</label> -->
+            <br><br>
+            <label for="pointSize"><input type="radio" name="mode" id="pointSize" checked /> 点大小</label>
+            <label for="pointSizeOpacity"><input type="radio" name="mode" id="pointSizeOpacity" /> 点大小+明度</label>
+            <br><br>
+            <label for="hasColor"><input type="radio" name="mode" id="hasColor" /> 彩图</label>
+            <br><br>
+            <label for="darkSide"><input type="radio" name="mode" id="darkSide" /> 高反差</label>
+            <br><br>
+            <button id="clear">清除文字</button>
+            <button id="back">后悔一步</button>
+            <button id="clearAll">重头开始</button>
+            <br><br>
+            <p id="log">日志输出</p>
+            <p id="bar">
+                <span id="barBg"></span>
+            </p>
+        </div>
+        <div class="ctrl2">
+            <label for="file" class="label">
+                <span class="ghost">+选择照片</span>
+                <input type="file" id="file" value="">
+            </label>
+            <canvas id="canvas3"></canvas>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
