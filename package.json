@@ -18,6 +18,7 @@
   "homepage": "https://github.com/MgGaHui/blog-code#readme",
   "dependencies": {
     "canvg": "^3.0.7",
-    "html2canvas": "^1.0.0-rc.7"
+    "html2canvas": "^1.0.0-rc.7",
+    "skeleton-loader": "^2.0.0"
   }
 }

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            position: relative;
+            margin: 50px;
+            /* width: 400px; */
+            max-height: 60px;
+            overflow: hidden;
+            /* animation: width-change 8s infinite; */
+        }
+
+        .box__text {
+            position: relative;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            font-size: 60px;
+            line-height: 0;
+            letter-spacing: 0;
+            color: transparent;
+            /*   background: pink; */
+            text-align: justify;
+        }
+
+        .box__inner {
+            font-size: 16px;
+            line-height: 20px;
+            color: #000;
+            vertical-align: top;
+            letter-spacing: 0;
+            display: inline;
+        }
+
+        .box__abs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .box__fake-text {
+            width: 100%;
+            margin-left: -60px;
+            line-height: 20px;
+            float: right;
+            color: transparent;
+        }
+
+        .box__placeholder {
+            width: 60px;
+            height: 60px;
+            float: right;
+            /*   background: gray; */
+            opacity: 0.5;
+        }
+
+        .box__more {
+            position: relative;
+            left: 100%;
+            transform: translate(-100%, -100%);
+            width: 60px;
+            height: 20px;
+            text-align: right;
+            color: #1890ff;
+            float: right;
+        }
+
+
+        @keyframes width-change {
+
+            0%,
+            100% {
+                width: 500px;
+            }
+
+            50% {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="box__text">
+            <div class="box__inner">
+                腾讯以技术丰富互联网用户的生活。通过通信及社 交软件微信和 QQ 促进用户联系，并助其连接数字 内容和生活服务，尽在弹指间。
+            </div>
+        </div>
+        <div class="box__abs">
+            <div class="box__fake-text">
+                腾讯以技术丰富互联网用户的生活。通过通信及社 交软件微信和 QQ 促进用户联系，并助其连接数字 内容和生活服务，尽在弹指间。
+            </div>
+            <div class="box__placeholder"></div>
+            <div class="box__more">... 展开</div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
