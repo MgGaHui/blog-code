@@ -92,7 +92,7 @@
             <thead>
               <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
             </thead>
-            <tbody>
+            <tbody class="beforeTableBody">
               <tr v-for="(data,i) of beforeTableData">
                 <td v-for="(key,_i) of tableHeader" :key="_i">
                   <div class="cell">{{data[key]}}</div>
@@ -109,7 +109,7 @@
               <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
             </thead>
             <tbody>
-              <tr v-for="(data,i) of nowTableData">
+              <tr v-for="(data,i) of nowTableData" @click="showLine">
                 <td v-for="(key,_i) of tableHeader" :key="_i">
                   <div class="cell">
                     <span>{{data[key]}}</span>
@@ -130,8 +130,17 @@
     </div>
     <script src="https://lib.baomitu.com/vue/2.6.14/vue.min.js"></script>
     <script src="https://lib.baomitu.com/xlsx/0.18.4/xlsx.core.min.js"></script>
+    <script
+      src="https://files.cnblogs.com/files/mggahui/leader-line.min.js"
+      async
+    ></script>
+    <script
+      src="https://lib.baomitu.com/jquery/latest/jquery.js"
+      async
+    ></script>
     <script>
       window.onload = function () {
+        var leader_line = null;
         // 算分的表头
         var scoreHeader = [
           "语文",
@@ -322,6 +331,62 @@
                 return buf;
               }
               return blob;
+            },
+            // 显示指示线
+            showLine(e) {
+              const $start = $(e.currentTarget).find("td").first();
+              const $tempTr = $(".beforeTableBody tr");
+              let $end = null;
+              try {
+                $tempTr.each(function (i) {
+                  console.log(i);
+                  $end = $(this).find("td").first();
+                  if ($end.text().trim() == $start.text().trim()) {
+                    return false;
+                  }
+                });
+              } catch (error) {
+                throw error;
+              }
+              /** 显示效果
+               *  draw 从起点到终点绘制线条
+               *  fade 淡入淡出
+               *  none 无效果，即直接显示
+               */
+              var showEffectName = "draw";
+              // 动画参数
+              var animOptions = {
+                duration: 1000, //持续时长
+                timing: "ease-in", // 动画函数
+              };
+              if (leader_line) {
+                leader_line.hide(showEffectName, animOptions);
+                // setTimeout(() => {
+                //   leader_line.remove();
+                //   leader_line = null
+                // }, 1000);
+              }
+              leader_line = new LeaderLine(
+                LeaderLine.pointAnchor($start.get(0), {
+                  x: $start.width() / 2,
+                  y: $start.height() / 2,
+                }),
+                LeaderLine.pointAnchor($end.get(0), {
+                  x: $end.width() / 2,
+                  y: $end.height() / 2,
+                }),
+                {
+                  startPlugColor: "#ff3792", // 渐变色开始色
+                  endPlugColor: "#fff386", // 渐变色结束色
+                  gradient: true, // 使用渐变色
+                  dash: {
+                    // 虚线样式
+                    animation: true, // 让线条滚动起来
+                  },
+                  hide: true,
+                }
+              );
+              leader_line.show(showEffectName, animOptions);
             },
           },
         });
