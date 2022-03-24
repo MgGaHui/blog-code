@@ -15,6 +15,10 @@
             height: 100%;
         }
 
+        .mt-12 {
+            margin-top: 12px;
+        }
+
         .flex-center {
             display: flex;
             justify-content: center;
@@ -26,13 +30,16 @@
 
 <body class="container-fluid">
     <div id="app">
-        <p>
-            <button type="button" @click="analyse()">分析成绩</button>
+        <p class="flex-center mt-12">
+            <button type="button" class="btn btn-info" @click="analyse()">分析成绩</button>
+            <button type="button" class="btn btn-info" @click="download()">下载excel</button>
+            <span class="label label-default mt-12">请先上传两次对比成绩</span>
         </p>
         <div class="row">
             <div class="col-md-6">
-                <p title="请选择上次成绩">
-                    <label for="">上次成绩<input type="file" @change="fileBefore=$event.target.files[0]"></label>
+                <p title="请选择上次成绩" class="flex-center">
+                    <label for=""><span class="label label-warning">上次成绩</span><input type="file"
+                            @change="fileBefore=$event.target.files[0]"></label>
                 </p>
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
@@ -56,10 +63,11 @@
                 </table>
             </div>
             <div class="col-md-6">
-                <p title="请选择本次成绩">
-                    <label for="">本次成绩<input type="file" @change="fileNow=$event.target.files[0]"></label>
+                <p title="请选择本次成绩" class="flex-center">
+                    <label for=""><span class="label label-warning">本次成绩</span><input type="file"
+                            @change="fileNow=$event.target.files[0]"></label>
                 </p>
-                <table class="table table-hover table-striped table-bordered">
+                <table class="table table-hover table-striped table-bordered nowTable">
                     <thead>
                         <th v-for="(v,i) of aoaFeader" :key="i">{{v}}</th>
                     </thead>
@@ -120,16 +128,16 @@
                         // }
                         var that = this
                         this.readWorkbookFromLocalFile(fileBefore, function (workbook) {
-                            console.log('workbook', workbook)
+                            // console.log('workbook', workbook)
                             var excel_json = that.readWorkbook(workbook)
                             that.beforeTableData = excel_json
-                            console.log(excel_json)
+                            // console.log(excel_json)
                         })
                         this.readWorkbookFromLocalFile(fileNow, function (workbook) {
-                            console.log('workbook', workbook)
+                            // console.log('workbook', workbook)
                             var excel_json = that.readWorkbook(workbook)
                             that.nowTableData = excel_json
-                            console.log(excel_json)
+                            // console.log(excel_json)
                         })
                     },
                     // 读取本地excel文件
@@ -147,8 +155,64 @@
                         var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
                         var excel_json = XLSX.utils.sheet_to_json(worksheet);
                         return excel_json
+                    },
+                    download() {
+                        // var aoa = [
+                        //     ['姓名', '性别', '年龄', '注册时间'],
+                        //     ['张三', '男', 18, new Date()],
+                        //     ['李四', '女', 22, new Date()]
+                        // ];
+                        // var sheet = XLSX.utils.aoa_to_sheet(aoa);
+                        var sheet = XLSX.utils.table_to_sheet($('.nowTable')[0]);
+                        this.openDownloadDialog(this.sheet2blob(sheet), '成绩分析.xlsx');
+                    },
+                    /**
+                     * 通用的打开下载对话框方法，没有测试过具体兼容性
+                     * @param url 下载地址，也可以是一个blob对象，必选
+                     * @param saveName 保存文件名，可选
+                     */
+                    openDownloadDialog(url, saveName) {
+                        if (typeof url == 'object' && url instanceof Blob) {
+                            url = URL.createObjectURL(url); // 创建blob地址
+                        }
+                        var aLink = document.createElement('a');
+                        aLink.href = url;
+                        aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+                        var event;
+                        if (window.MouseEvent) event = new MouseEvent('click');
+                        else {
+                            event = document.createEvent('MouseEvents');
+                            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                        }
+                        aLink.dispatchEvent(event);
+                    },
+                    // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
+                    sheet2blob(sheet, sheetName) {
+                        sheetName = sheetName || 'sheet1';
+                        var workbook = {
+                            SheetNames: [sheetName],
+                            Sheets: {}
+                        };
+                        workbook.Sheets[sheetName] = sheet;
+                        // 生成excel的配置项
+                        var wopts = {
+                            bookType: 'xlsx', // 要生成的文件类型
+                            bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+                            type: 'binary'
+                        };
+                        var wbout = XLSX.write(workbook, wopts);
+                        var blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
+                        // 字符串转ArrayBuffer
+                        function s2ab(s) {
+                            var buf = new ArrayBuffer(s.length);
+                            var view = new Uint8Array(buf);
+                            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                            return buf;
+                        }
+                        return blob;
                     }
                 },
+
             })
         }
     </script>
