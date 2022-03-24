@@ -207,8 +207,8 @@
             analyse() {
               var fileBefore = this.fileBefore;
               var fileNow = this.fileNow;
-              if (fileBefore && fileNow) {
-                alert("开始分析");
+              if (!fileBefore && !fileNow) {
+                return;
               }
               var beforeTableData = this.beforeTableData;
               var temp = {}; // 缓存数据，方便快速查找
@@ -257,15 +257,23 @@
                 alert("请选择本次成绩");
                 return;
               }
-              // var aoa = [
-              //     ['姓名', '性别', '年龄', '注册时间'],
-              //     ['张三', '男', 18, new Date()],
-              //     ['李四', '女', 22, new Date()]
-              // ];
-              // var sheet = XLSX.utils.aoa_to_sheet(aoa);
-              var sheet = XLSX.utils.table_to_sheet(
-                document.getElementsByClassName("nowTable")[0]
-              );
+              var aoa = [
+                // 第一行表头
+                ["姓名", ...scoreHeader.map((v) => [v, "成长"]).flat()],
+              ];
+              var data = [];
+              var nowTableData = this.nowTableData;
+              nowTableData.forEach((v) => {
+                var arr = [v["姓名"]];
+                scoreHeader.forEach((key) => {
+                  arr.push(v[key], v[key + "_score"]);
+                });
+                aoa.push(arr)
+              });
+              var sheet = XLSX.utils.aoa_to_sheet(aoa);
+              // var sheet = XLSX.utils.table_to_sheet(
+              //   document.getElementsByClassName("nowTable")[0]
+              // );
               this.openDownloadDialog(this.sheet2blob(sheet), "成绩分析.xlsx");
             },
             /**
