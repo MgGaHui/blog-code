@@ -1,134 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>excel</title>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
-      crossorigin="anonymous"
-    />
-    <style>
-      body,
-      html {
-        height: 100%;
-      }
 
-      .mt-12 {
-        margin-top: 12px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>excel</title>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous" />
+  <style>
+    body,
+    html {
+      height: 100%;
+    }
 
-      .flex-center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
+    .mt-12 {
+      margin-top: 12px;
+    }
 
-      th {
-        text-align: center;
-      }
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-      td {
-      }
-      td .cell {
-        height: 70px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-end;
-      }
-      .success {
-        color: green;
-      }
-      .danger {
-        color: red;
-      }
-    </style>
-  </head>
+    th {
+      text-align: center;
+    }
 
-  <body class="container-fluid">
-    <div id="app">
-      <p class="flex-center mt-12">
-        <!-- <button type="button" class="btn btn-info" @click="analyse()">
+    td {}
+
+    td .cell {
+      height: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .danger {
+      color: red;
+    }
+  </style>
+</head>
+
+<body class="container-fluid">
+  <div id="app">
+    <p class="flex-center mt-12">
+      <!-- <button type="button" class="btn btn-info" @click="analyse()">
           分析成绩
         </button> -->
-        <button type="button" class="btn btn-info" @click="download()">
-          下载成绩分析excel
-        </button>
-        <span class="label label-default mt-12">请先上传两次对比成绩</span>
-      </p>
-      <div class="row">
-        <div class="col-md-6">
-          <p title="请选择上次成绩" class="flex-center">
-            <label for=""
-              ><span class="label label-warning">上次成绩</span
-              ><input type="file" @change="fileChangeBefore"
-            /></label>
-          </p>
-          <table class="table table-hover table-striped table-bordered">
-            <thead>
-              <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
-            </thead>
-            <tbody>
-              <tr v-for="(data,i) of beforeTableData">
-                <td v-for="(key,_i) of tableHeader" :key="_i">
-                  <div class="cell">{{data[key]}}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6">
-          <p title="请选择本次成绩" class="flex-center">
-            <label for=""
-              ><span class="label label-warning">本次成绩</span
-              ><input type="file" @change="fileChangeNow"
-            /></label>
-          </p>
-          <table
-            class="table table-hover table-striped table-bordered nowTable"
-          >
-            <thead>
-              <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
-            </thead>
-            <tbody>
-              <tr v-for="(data,i) of nowTableData">
-                <td v-for="(key,_i) of tableHeader" :key="_i">
-                  <div class="cell">
-                    <span>{{data[key]}}</span>
-                    <span
-                      :class="{
+    <p title="请选择上次成绩" class="flex-center">
+      <label for="">
+        <span class="label label-warning">上次成绩</span>
+        <input type="file" @change="fileChangeBefore" />
+      </label>
+    </p>
+    <p>
+      <button type="button" class="btn btn-info" @click="download()">
+        下载成绩分析excel
+      </button>
+      <span class="label label-default mt-12">请先上传两次对比成绩</span>
+    </p>
+    <p title="请选择本次成绩" class="flex-center">
+      <label for="">
+        <span class="label label-warning">本次成绩</span>
+        <input type="file" @change="fileChangeNow" />
+      </label>
+    </p>
+    </p>
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table table-hover table-striped table-bordered">
+          <thead>
+            <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
+          </thead>
+          <tbody>
+            <tr v-for="(data,i) of beforeTableData">
+              <td v-for="(key,_i) of tableHeader" :key="_i">
+                <div class="cell">{{data[key]}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <table class="table table-hover table-striped table-bordered nowTable">
+          <thead>
+            <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
+          </thead>
+          <tbody>
+            <tr v-for="(data,i) of nowTableData">
+              <td v-for="(key,_i) of tableHeader" :key="_i">
+                <div class="cell">
+                  <span>{{data[key]}}</span>
+                  <span :class="{
                         'success bg-success':data[key+'_score'] > 0,
                         'danger bg-danger':data[key+'_score'] < 0
-                    }"
-                      >{{data[key+'_score']}}</span
-                    >
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                    }">{{data[key+'_score']}}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <script src="https://lib.baomitu.com/vue/2.6.14/vue.min.js"></script>
-    <script src="https://lib.baomitu.com/xlsx/0.18.4/xlsx.core.min.js"></script>
-    <script
-      crossorigin="anonymous"
-      src="https://lib.baomitu.com/jquery/latest/jquery.min.js"
-    ></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-      integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-      crossorigin="anonymous"
-    ></script>
-    <script>
+  </div>
+  <script src="https://lib.baomitu.com/vue/2.6.14/vue.min.js"></script>
+  <script src="https://lib.baomitu.com/xlsx/0.18.4/xlsx.core.min.js"></script>
+  <script>
+    window.onload = function () {
       // 算分的表头
       var scoreHeader = [
         "语文",
@@ -142,187 +129,188 @@
         "级排名",
         "班排名",
       ];
-      window.onload = function () {
-        new Vue({
-          el: "#app",
-          data() {
-            return {
-              fileBefore: null, // 之前成绩文件
-              fileNow: null, //现在成绩文件
-              // uniid: '考号', // 唯一数据标识字段
-              tableHeader: ["姓名", ...scoreHeader],
-              beforeTableData: [],
-              nowTableData: [],
-            };
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            fileBefore: null, // 之前成绩文件
+            fileNow: null, //现在成绩文件
+            // uniid: '考号', // 唯一数据标识字段
+            tableHeader: ["姓名", ...scoreHeader],
+            beforeTableData: [],
+            nowTableData: [],
+          };
+        },
+        filters: {
+          format(v) {
+            return Number(v).toFixed(1);
           },
-          filters: {
-            format(v) {
-              return Number(v).toFixed(1);
-            },
+        },
+        methods: {
+          fileChangeBefore(e) {
+            var file = e.target.files[0];
+            //   防止取消
+            if (file) {
+              this.fileBefore = file;
+              this.showBeforeTAble().then(this.analyse);
+            }
           },
-          methods: {
-            fileChangeBefore(e) {
-              var file = e.target.files[0];
-              //   防止取消
-              if (file) {
-                this.fileBefore = file;
-                this.showBeforeTAble().then(this.analyse);
+          fileChangeNow(e) {
+            var file = e.target.files[0];
+            //   防止取消
+            if (file) {
+              this.fileNow = file;
+              this.showNowTable().then(this.analyse);
+            }
+          },
+          showBeforeTAble() {
+            return this.readWorkbookFromLocalFile(this.fileBefore).then(
+              (workbookBefore) => {
+                var excel_json_before = this.readWorkbook(workbookBefore);
+                this.beforeTableData = excel_json_before;
               }
-            },
-            fileChangeNow(e) {
-              var file = e.target.files[0];
-              //   防止取消
-              if (file) {
-                this.fileNow = file;
-                this.showNowTable().then(this.analyse);
+            );
+          },
+          showNowTable() {
+            return this.readWorkbookFromLocalFile(this.fileNow).then(
+              (workbookNow) => {
+                var excel_json_now = this.readWorkbook(workbookNow);
+                this.nowTableData = excel_json_now;
               }
-            },
-            showBeforeTAble() {
-              return this.readWorkbookFromLocalFile(this.fileBefore).then(
-                (workbookBefore) => {
-                  var excel_json_before = this.readWorkbook(workbookBefore);
-                  this.beforeTableData = excel_json_before;
-                }
-              );
-            },
-            showNowTable() {
-              return this.readWorkbookFromLocalFile(this.fileNow).then(
-                (workbookNow) => {
-                  var excel_json_now = this.readWorkbook(workbookNow);
-                  this.nowTableData = excel_json_now;
-                }
-              );
-            },
-            analyse() {
-              var fileBefore = this.fileBefore;
-              var fileNow = this.fileNow;
-              if (fileBefore && fileNow) {
-                alert("开始分析");
-              }
-              var beforeTableData = this.beforeTableData;
-              var temp = {}; // 缓存数据，方便快速查找
-              beforeTableData.forEach((v) => {
-                temp[v["姓名"]] = v;
-              });
-              var nowTableData = this.nowTableData;
-              nowTableData.forEach((score) => {
-                scoreHeader.forEach((key) => {
-                  var originScore = temp[score["姓名"]];
-                  this.$set(
-                    score,
-                    key + "_score",
-                    score[key] - originScore[key]
-                  );
-                  //   score[key + "_score"] = score[key] - originScore[key];
-                  //   console.log("score",score);
-                });
-              });
-            },
-            // 读取本地excel文件
-            readWorkbookFromLocalFile(file) {
-              return new Promise((r, j) => {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                  var data = e.target.result;
-                  var workbook = XLSX.read(data, { type: "binary" });
-                  r(workbook);
-                };
-                reader.readAsBinaryString(file);
-              });
-            },
-            readWorkbook(workbook) {
-              var sheetNames = workbook.SheetNames; // 工作表名称集合
-              var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
-              var excel_json = XLSX.utils.sheet_to_json(worksheet);
-              return excel_json;
-            },
-            download() {
-              var fileBefore = this.fileBefore;
-              var fileNow = this.fileNow;
-              if (!fileBefore) {
-                alert("请选择上次成绩");
-                return;
-              }
-              if (!fileNow) {
-                alert("请选择本次成绩");
-                return;
-              }
-              // var aoa = [
-              //     ['姓名', '性别', '年龄', '注册时间'],
-              //     ['张三', '男', 18, new Date()],
-              //     ['李四', '女', 22, new Date()]
-              // ];
-              // var sheet = XLSX.utils.aoa_to_sheet(aoa);
-              var sheet = XLSX.utils.table_to_sheet($(".nowTable")[0]);
-              this.openDownloadDialog(this.sheet2blob(sheet), "成绩分析.xlsx");
-            },
-            /**
-             * 通用的打开下载对话框方法，没有测试过具体兼容性
-             * @param url 下载地址，也可以是一个blob对象，必选
-             * @param saveName 保存文件名，可选
-             */
-            openDownloadDialog(url, saveName) {
-              if (typeof url == "object" && url instanceof Blob) {
-                url = URL.createObjectURL(url); // 创建blob地址
-              }
-              var aLink = document.createElement("a");
-              aLink.href = url;
-              aLink.download = saveName || ""; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
-              var event;
-              if (window.MouseEvent) event = new MouseEvent("click");
-              else {
-                event = document.createEvent("MouseEvents");
-                event.initMouseEvent(
-                  "click",
-                  true,
-                  false,
-                  window,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  false,
-                  false,
-                  false,
-                  false,
-                  0,
-                  null
+            );
+          },
+          analyse() {
+            var fileBefore = this.fileBefore;
+            var fileNow = this.fileNow;
+            if (fileBefore && fileNow) {
+              alert("开始分析");
+            }
+            var beforeTableData = this.beforeTableData;
+            var temp = {}; // 缓存数据，方便快速查找
+            beforeTableData.forEach((v) => {
+              temp[v["姓名"]] = v;
+            });
+            var nowTableData = this.nowTableData;
+            nowTableData.forEach((score) => {
+              scoreHeader.forEach((key) => {
+                var originScore = temp[score["姓名"]];
+                this.$set(
+                  score,
+                  key + "_score",
+                  originScore[key] ? `${score[key] - originScore[key]}` : ""
                 );
-              }
-              aLink.dispatchEvent(event);
-            },
-            // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
-            sheet2blob(sheet, sheetName) {
-              sheetName = sheetName || "sheet1";
-              var workbook = {
-                SheetNames: [sheetName],
-                Sheets: {},
-              };
-              workbook.Sheets[sheetName] = sheet;
-              // 生成excel的配置项
-              var wopts = {
-                bookType: "xlsx", // 要生成的文件类型
-                bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
-                type: "binary",
-              };
-              var wbout = XLSX.write(workbook, wopts);
-              var blob = new Blob([s2ab(wbout)], {
-                type: "application/octet-stream",
+                //   score[key + "_score"] = score[key] - originScore[key];
               });
-              // 字符串转ArrayBuffer
-              function s2ab(s) {
-                var buf = new ArrayBuffer(s.length);
-                var view = new Uint8Array(buf);
-                for (var i = 0; i != s.length; ++i)
-                  view[i] = s.charCodeAt(i) & 0xff;
-                return buf;
-              }
-              return blob;
-            },
+            });
           },
-        });
-      };
-    </script>
-  </body>
+          // 读取本地excel文件
+          readWorkbookFromLocalFile(file) {
+            return new Promise((r, j) => {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                var data = e.target.result;
+                var workbook = XLSX.read(data, { type: "binary" });
+                r(workbook);
+              };
+              reader.readAsBinaryString(file);
+            });
+          },
+          readWorkbook(workbook) {
+            var sheetNames = workbook.SheetNames; // 工作表名称集合
+            var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet
+            var excel_json = XLSX.utils.sheet_to_json(worksheet);
+            return excel_json;
+          },
+          download() {
+            var fileBefore = this.fileBefore;
+            var fileNow = this.fileNow;
+            if (!fileBefore) {
+              alert("请选择上次成绩");
+              return;
+            }
+            if (!fileNow) {
+              alert("请选择本次成绩");
+              return;
+            }
+            // var aoa = [
+            //     ['姓名', '性别', '年龄', '注册时间'],
+            //     ['张三', '男', 18, new Date()],
+            //     ['李四', '女', 22, new Date()]
+            // ];
+            // var sheet = XLSX.utils.aoa_to_sheet(aoa);
+            var sheet = XLSX.utils.table_to_sheet(
+              document.getElementsByClassName("nowTable")[0]
+            );
+            this.openDownloadDialog(this.sheet2blob(sheet), "成绩分析.xlsx");
+          },
+          /**
+           * 通用的打开下载对话框方法，没有测试过具体兼容性
+           * @param url 下载地址，也可以是一个blob对象，必选
+           * @param saveName 保存文件名，可选
+           */
+          openDownloadDialog(url, saveName) {
+            if (typeof url == "object" && url instanceof Blob) {
+              url = URL.createObjectURL(url); // 创建blob地址
+            }
+            var aLink = document.createElement("a");
+            aLink.href = url;
+            aLink.download = saveName || ""; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+            var event;
+            if (window.MouseEvent) event = new MouseEvent("click");
+            else {
+              event = document.createEvent("MouseEvents");
+              event.initMouseEvent(
+                "click",
+                true,
+                false,
+                window,
+                0,
+                0,
+                0,
+                0,
+                0,
+                false,
+                false,
+                false,
+                false,
+                0,
+                null
+              );
+            }
+            aLink.dispatchEvent(event);
+          },
+          // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
+          sheet2blob(sheet, sheetName) {
+            sheetName = sheetName || "sheet1";
+            var workbook = {
+              SheetNames: [sheetName],
+              Sheets: {},
+            };
+            workbook.Sheets[sheetName] = sheet;
+            // 生成excel的配置项
+            var wopts = {
+              bookType: "xlsx", // 要生成的文件类型
+              bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+              type: "binary",
+            };
+            var wbout = XLSX.write(workbook, wopts);
+            var blob = new Blob([s2ab(wbout)], {
+              type: "application/octet-stream",
+            });
+            // 字符串转ArrayBuffer
+            function s2ab(s) {
+              var buf = new ArrayBuffer(s.length);
+              var view = new Uint8Array(buf);
+              for (var i = 0; i != s.length; ++i)
+                view[i] = s.charCodeAt(i) & 0xff;
+              return buf;
+            }
+            return blob;
+          },
+        },
+      });
+    };
+  </script>
+</body>
+
 </html>
