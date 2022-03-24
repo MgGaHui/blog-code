@@ -141,6 +141,7 @@
     <script>
       window.onload = function () {
         var leader_line = null;
+        var topRankHeader = ["级排名", "班排名"]; // 这个排名数值越小越好
         // 算分的表头
         var scoreHeader = [
           "语文",
@@ -151,8 +152,7 @@
           "思想",
           "历史",
           "总分",
-          "级排名",
-          "班排名",
+          ...topRankHeader,
         ];
         new Vue({
           el: "#app",
@@ -219,11 +219,12 @@
               nowTableData.forEach((score) => {
                 scoreHeader.forEach((key) => {
                   var originScore = temp[score["姓名"]];
-                  this.$set(
-                    score,
-                    key + "_score",
-                    originScore[key] ? `${score[key] - originScore[key]}` : ""
-                  );
+                  var val = (score[key] || 0) - (originScore[key] || 0);
+                  if (topRankHeader.includes(key)) {
+                    // 如果是分值越小越好的排名情况
+                    val = (originScore[key] || 0) - (score[key] || 0);
+                  }
+                  this.$set(score, key + "_score", val);
                   //   score[key + "_score"] = score[key] - originScore[key];
                 });
               });
@@ -268,7 +269,7 @@
                 scoreHeader.forEach((key) => {
                   arr.push(v[key], v[key + "_score"]);
                 });
-                aoa.push(arr)
+                aoa.push(arr);
               });
               var sheet = XLSX.utils.aoa_to_sheet(aoa);
               // var sheet = XLSX.utils.table_to_sheet(
@@ -364,7 +365,7 @@
               var showEffectName = "draw";
               // 动画参数
               var animOptions = {
-                duration: 1000, //持续时长
+                duration: 300, //持续时长
                 timing: "ease-in", // 动画函数
               };
               if (leader_line) {
@@ -375,13 +376,13 @@
                 // }, 1000);
               }
               leader_line = new LeaderLine(
-                LeaderLine.pointAnchor($start.get(0), {
-                  x: $start.width() / 2,
-                  y: $start.height() / 2,
-                }),
                 LeaderLine.pointAnchor($end.get(0), {
                   x: $end.width() / 2,
                   y: $end.height() / 2,
+                }),
+                LeaderLine.pointAnchor($start.get(0), {
+                  x: $start.width() / 2,
+                  y: $start.height() / 2,
                 }),
                 {
                   startPlugColor: "#ff3792", // 渐变色开始色
