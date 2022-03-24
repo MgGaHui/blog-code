@@ -34,7 +34,19 @@
       }
 
       td {
-        text-align: right;
+      }
+      td .cell {
+        height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+      }
+      .success {
+        color: green;
+      }
+      .danger {
+        color: red;
       }
     </style>
   </head>
@@ -60,21 +72,13 @@
           </p>
           <table class="table table-hover table-striped table-bordered">
             <thead>
-              <th v-for="(v,i) of aoaFeader" :key="i">{{v}}</th>
+              <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
             </thead>
             <tbody>
-              <tr v-for="(v,i) of beforeTableData">
-                <td>{{v['姓名'] }}</td>
-                <td>{{v['语文'] |format}}</td>
-                <td>{{v['数学'] |format}}</td>
-                <td>{{v['英语'] |format}}</td>
-                <td>{{v['物理'] |format}}</td>
-                <td>{{v['化学'] |format}}</td>
-                <td>{{v['思想'] |format}}</td>
-                <td>{{v['历史'] |format}}</td>
-                <td>{{v['总分'] |format}}</td>
-                <td>{{v['级排名'] }}</td>
-                <td>{{v['班排名'] }}</td>
+              <tr v-for="(data,i) of beforeTableData">
+                <td v-for="(key,_i) of tableHeader" :key="_i">
+                  <div class="cell">{{data[key]}}</div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -90,21 +94,22 @@
             class="table table-hover table-striped table-bordered nowTable"
           >
             <thead>
-              <th v-for="(v,i) of aoaFeader" :key="i">{{v}}</th>
+              <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
             </thead>
             <tbody>
-              <tr v-for="(v,i) of nowTableData">
-                <td>{{v['姓名']}}</td>
-                <td>{{v['语文'] |format}}</td>
-                <td>{{v['数学'] |format}}</td>
-                <td>{{v['英语'] |format}}</td>
-                <td>{{v['物理'] |format}}</td>
-                <td>{{v['化学'] |format}}</td>
-                <td>{{v['思想'] |format}}</td>
-                <td>{{v['历史'] |format}}</td>
-                <td>{{v['总分'] |format}}</td>
-                <td>{{v['级排名'] }}</td>
-                <td>{{v['班排名']}}</td>
+              <tr v-for="(data,i) of nowTableData">
+                <td v-for="(key,_i) of tableHeader" :key="_i">
+                  <div class="cell">
+                    <span>{{data[key]}}</span>
+                    <span
+                      :class="{
+                        'success bg-success':data[key+'_score'] > 0,
+                        'danger bg-danger':data[key+'_score'] < 0
+                    }"
+                      >{{data[key+'_score']}}</span
+                    >
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -124,6 +129,19 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      // 算分的表头
+      var scoreHeader = [
+        "语文",
+        "数学",
+        "英语",
+        "物理",
+        "化学",
+        "思想",
+        "历史",
+        "总分",
+        "级排名",
+        "班排名",
+      ];
       window.onload = function () {
         new Vue({
           el: "#app",
@@ -132,19 +150,7 @@
               fileBefore: null, // 之前成绩文件
               fileNow: null, //现在成绩文件
               // uniid: '考号', // 唯一数据标识字段
-              aoaFeader: [
-                "姓名",
-                "语文",
-                "数学",
-                "英语",
-                "物理",
-                "化学",
-                "思想",
-                "历史",
-                "总分",
-                "级排名",
-                "班排名",
-              ],
+              tableHeader: ["姓名", ...scoreHeader],
               beforeTableData: [],
               nowTableData: [],
             };
@@ -193,6 +199,24 @@
               if (fileBefore && fileNow) {
                 alert("开始分析");
               }
+              var beforeTableData = this.beforeTableData;
+              var temp = {}; // 缓存数据，方便快速查找
+              beforeTableData.forEach((v) => {
+                temp[v["姓名"]] = v;
+              });
+              var nowTableData = this.nowTableData;
+              nowTableData.forEach((score) => {
+                scoreHeader.forEach((key) => {
+                  var originScore = temp[score["姓名"]];
+                  this.$set(
+                    score,
+                    key + "_score",
+                    score[key] - originScore[key]
+                  );
+                  //   score[key + "_score"] = score[key] - originScore[key];
+                  //   console.log("score",score);
+                });
+              });
             },
             // 读取本地excel文件
             readWorkbookFromLocalFile(file) {
