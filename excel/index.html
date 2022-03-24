@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>excel</title>
+    <title>成绩分析</title>
+    <link rel="shortcut icon" href="./assets/mao.gif" type="image/x-icon" />
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link
       rel="stylesheet"
@@ -59,11 +60,21 @@
         color: red;
       }
     </style>
+    <style>
+      @media print {
+        .no-print {
+          display: none;
+        }
+        @page {
+          size: A4 portrait;
+        }
+      }
+    </style>
   </head>
 
   <body class="container-fluid">
     <div id="app">
-      <section class="flex-center mt-12">
+      <section class="flex-center mt-12 no-print">
         <!-- <button type="button" class="btn btn-info" @click="analyse()">
           分析成绩
         </button> -->
@@ -87,7 +98,7 @@
         </section>
       </section>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 no-print">
           <table class="table table-hover table-striped table-bordered">
             <thead>
               <th v-for="(v,i) of tableHeader" :key="i">{{v}}</th>
